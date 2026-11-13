@@ -82,6 +82,7 @@ ol.steps{list-style:none;margin:0 0 20px;padding:0;display:flex;flex-direction:c
 ol.steps li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;align-items:start}
 ol.steps .n{width:36px;height:36px;border-radius:50%;background:var(--step);color:#fff;display:grid;place-items:center;font-weight:700;font-size:18px}
 ol.steps .t{font-size:19.5px;font-weight:600;padding-top:3px}
+a.lnk{display:inline-block;margin:6px 0 2px;padding:7px 14px;border-radius:8px;background:var(--step);color:#fff;font-size:16px;font-weight:700;text-decoration:none}a.lnk:hover{filter:brightness(1.1)}
 ol.steps .t small{display:block;font-size:16px;font-weight:400;color:var(--muted)}
 .shot{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
 .shot img{display:block;width:100%;height:auto}
@@ -886,7 +887,8 @@ add('attend-setting','set','자동 알림','o','출석 알림과 지각 기준�
 ],['kiosk-setup','kiosk-number']);
 add('naver-connect','set','예약 연동','o','네이버 예약을 연결하려면?','네이버 예약 문의를 자동으로 받을 때 (학원 PC · Windows · Chrome)',[
  {t:'설치 파일 받기', path:'학원 PC › 구글 드라이브', imgs:[['nv_04.png','「이 파일 형식은 위험할 수 있습니다」 → 다운로드'],['nv_05.png','저장 위치 확인 → 저장']],
-  steps:[['안내받은 설치 파일 링크(구글 드라이브 「유미니 네이버 재세팅」 폴더)를 엽니다.','drive.google.com/drive/folders/1uD-h9fwsmoz6_7MNvo2U1OpSyIlx2Fau'],['목록의 「youmeani-academy-agent-1.1.1-setup.exe」를 누릅니다.'],['「미리보기가 없음」 화면 가운데 파란 「다운로드」를 누릅니다.'],['「이 파일 형식은 위험할 수 있습니다」 창에서 「다운로드」를 누릅니다.'],['저장 위치(기본 「다운로드」 폴더 그대로)를 확인하고 「저장」을 누릅니다.']]},
+  steps:[['학원 PC의 크롬(Chrome)에서 설치 파일 폴더를 엽니다. [[유미니 네이버 재세팅 폴더 열기|https://drive.google.com/drive/folders/1uD-h9fwsmoz6_7MNvo2U1OpSyIlx2Fau]]','꼭 크롬에서 열어 받아야 에이전트가 설치돼요'],['목록의 「youmeani-academy-agent-1.1.1-setup.exe」를 누릅니다.'],['「미리보기가 없음」 화면 가운데 파란 「다운로드」를 누릅니다.'],['「이 파일 형식은 위험할 수 있습니다」 창에서 「다운로드」를 누릅니다.'],['저장 위치(기본 「다운로드」 폴더 그대로)를 확인하고 「저장」을 누릅니다.']],
+  help:'유미니 에이전트 설치 파일은 꼭 크롬(Chrome) 환경에서 열어 받아야 설치돼요.'},
  {t:'에이전트 설치', path:'학원 PC › 다운로드 폴더', imgs:[['nv_07.png','「모든 사용자」 → 다음'],['nv_08.png','설치 폴더 그대로 → 설치'],['nv_09.png','「실행하기」 체크 → 마침'],['nv_10.png','에이전트 첫 화면']],
   steps:[['다운로드 폴더에서 「youmeani-academy-agent-1.1.1-setup」을 더블클릭합니다.'],['설치 옵션에서 「모든 사용자」를 고르고 「다음」을 누릅니다.'],['설치 폴더는 그대로 두고 「설치」를 누릅니다.'],['「유미니 학원 에이전트 실행하기」 체크를 확인하고 「마침」을 누릅니다.'],['에이전트 창에 학원 코드 · 에이전트 키 · 네이버 예약 연결 칸이 보이면 설치 완료예요.']]},
  {t:'유미니에서 키 복사', path:'학원 설정 › 네이버 예약', img:'naver.png', cap:'네이버 예약', mk:[[2,24.0,37.8,8.0,5.3],[3,91.2,18.9,5.7,5.8],[4,91.2,31.1,5.7,5.8]],
@@ -1073,7 +1075,7 @@ function menu(id){
   return `<button class="crumb" data-home="1">← 처음 화면</button><h1>${esc(M.n)}</h1><p class="lead">궁금한 것을 누르면 순서대로 자세히 알려드려요.</p>`+
     subs.map(s=>`${subs.length>1?`<p class="sub">${esc(s)}</p>`:''}${qs.filter(q=>q.sub===s).map(qcard).join('')}`).join('');
 }
-const btn=s=>esc(s).replace(/「([^」]+)」/g,'<span class="kb">$1</span>');
+const btn=s=>esc(s).replace(/「([^」]+)」/g,'<span class="kb">$1</span>').replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,'<a class="lnk" href="$2" target="_blank" rel="noopener">$1 ↗</a>');
 function stage(t,k,multi){
   const marks=(t.mk||[]).map(m=>`<span class="bx" style="left:${m[1]}%;top:${m[2]}%;width:${m[3]}%;height:${m[4]}%"></span><span class="sp" style="left:${m[1]}%;top:${m[2]}%">${m[0]}</span>`).join('')
     +(t.sp||[]).map(p=>`<span class="sp" style="left:${p[1]}%;top:${p[2]}%">${p[0]}</span>`).join('');
